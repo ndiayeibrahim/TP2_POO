@@ -72,7 +72,7 @@ defer:
     return result;
 }
 
-#define LAB_NAME "entrypoint"
+#define LAB_NAME "Game"
 bool build_game(void)
 {
     bool result = true;
@@ -88,7 +88,13 @@ bool build_game(void)
     knob_cmd_append(&cmd, ZIG_PATH,"c++");
     knob_cmd_append(&cmd, "-static");
     knob_cmd_append(&cmd, "--debug", "-std=c++11", "-fno-sanitize=undefined","-fno-omit-frame-pointer");
-    knob_cmd_append(&cmd, "-I"RAYLIB_PATH"/src");
+    knob_cmd_append(&cmd, "./src/Asteroid.cpp");
+    knob_cmd_append(&cmd, "./src/Bullet.cpp");
+    knob_cmd_append(&cmd, "./src/Game.cpp");
+    knob_cmd_append(&cmd, "./src/Player.cpp");
+    knob_cmd_append(&cmd, "./src/main.cpp");
+    knob_cmd_append(&cmd, "./src/Utils.cpp");
+    
     build_raylib(&cmd);
     knob_cmd_append(&cmd,knob_temp_sprintf("./src/%s.cpp",LAB_NAME),"-o","./Deployment/game.exe");
     knob_cmd_append(&cmd, "-lkernel32","-lwinmm", "-lgdi32","-lopengl32");
